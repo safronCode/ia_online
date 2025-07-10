@@ -16,9 +16,13 @@ Including another URLconf
 import settings
 from django.contrib import admin
 from django.urls import path, include
+from start.views import start
 
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', start, name='start'),
+    path('deals/', include('deals.urls')),
+    path('lobby/', include('lobby.urls')),
 ]

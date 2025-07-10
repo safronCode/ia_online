@@ -1,5 +1,6 @@
 import os
 
+
 APP_SETTINGS = None
 
 ADMINS = (
@@ -29,6 +30,8 @@ INSTALLED_APPS = [
     'integration_utils.bitrix24',
     'integration_utils.its_utils.app_gitpull',
 
+    'start',
+    'deals'
 ]
 
 MIDDLEWARE = [
@@ -45,8 +48,7 @@ ROOT_URLCONF = 'urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
