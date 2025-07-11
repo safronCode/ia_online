@@ -5,7 +5,7 @@
 <div id="table-container"></div>
 
 
-{{ recent_active|json_script:"recent-deals-data" }}
+{{ deals|json_script:"recent-deals-data" }}
 
 <script>
   const dealsData = JSON.parse(

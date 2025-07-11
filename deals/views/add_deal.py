@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from integration_utils.bitrix24.bitrix_user_auth.main_auth import main_auth
+from views.custom_fields import VIP_STATUS, DELIVERY_ADDRESS
 
 
 @main_auth(on_cookies=True)
@@ -19,14 +20,14 @@ def add_deal(request):
             'OPPORTUNITY': opportunity,
             'BEGINDATE': begindate,
             'CLOSEDATE': closedate,
-            'UF_CRM_1752105537687': address,
-            'UF_CRM_1752105693326': vip_status,
+            DELIVERY_ADDRESS: address,
+            VIP_STATUS: vip_status,
         }
 
         if vip_status == 'on':
-            fields['UF_CRM_1752105693326'] = "1"
+            fields[VIP_STATUS] = "1"
         else:
-            fields['UF_CRM_1752105693326'] = "0"
+            fields[VIP_STATUS] = "0"
 
         but = request.bitrix_user_token
         but.call_api_method('crm.deal.add', {'fields': fields})

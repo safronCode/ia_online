@@ -3,6 +3,8 @@ from integration_utils.bitrix24.bitrix_user_auth.main_auth import main_auth
 from datetime import datetime
 from dateutil import tz
 
+from views.custom_fields import VIP_STATUS, DELIVERY_ADDRESS
+
 
 def iso_transform(date):
     date = datetime.fromisoformat(date.replace('Z', '+00:00'))
@@ -19,15 +21,15 @@ def active_deals(request):
              "!@STAGE_ID": ["WON", "LOSE", "APOLOGY"]
         },
         'order': {'BEGINDATE': 'DESC'},
-        'select': ['ID', 'STAGE_ID', 'TITLE','OPPORTUNITY','BEGINDATE','CLOSEDATE','UF_CRM_1752105537687','UF_CRM_1752105693326'],
+        'select': ['ID', 'STAGE_ID', 'TITLE','OPPORTUNITY','BEGINDATE','CLOSEDATE', DELIVERY_ADDRESS, VIP_STATUS],
     })['result'][:10]
 
     for deal in recent_active:
         deal['BEGINDATE'] = iso_transform(deal['BEGINDATE'])
         deal['CLOSEDATE'] = iso_transform(deal['CLOSEDATE'])
-        if deal['UF_CRM_1752105693326'] == "1":
-            deal['UF_CRM_1752105693326'] = "✔"
+        if deal[VIP_STATUS] == "1":
+            deal[VIP_STATUS] = "✔"
         else:
-            deal['UF_CRM_1752105693326'] = "✘"
+            deal[VIP_STATUS] = "✘"
 
-    return render(request, 'active_mode.html', locals())
+    return render(request, 'active_mode.html', {'deals':recent_active})
