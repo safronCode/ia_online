@@ -13,8 +13,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 PROJECT_PATH = os.path.dirname(__file__).replace('\\','/')
 
-SECRET_KEY = 'UxWXNk8hFEJYUkstPtBdtNgvqKfOFbME'
-
 DEBUG = False
 
 ALLOWED_HOSTS = []
@@ -31,7 +29,8 @@ INSTALLED_APPS = [
     'integration_utils.its_utils.app_gitpull',
 
     'start',
-    'deals'
+    'deals',
+    'product',
 ]
 
 MIDDLEWARE = [
