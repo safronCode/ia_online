@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from integration_utils.bitrix24.bitrix_user_auth.main_auth import main_auth
-from views.custom_fields import VIP_STATUS, DELIVERY_ADDRESS
+from .custom_fields import VIP_STATUS, DELIVERY_ADDRESS
 
 
 @main_auth(on_cookies=True)

@@ -3,7 +3,7 @@ from integration_utils.bitrix24.bitrix_user_auth.main_auth import main_auth
 from datetime import datetime
 from dateutil import tz
 
-from views.custom_fields import VIP_STATUS, DELIVERY_ADDRESS
+from .custom_fields import VIP_STATUS, DELIVERY_ADDRESS
 
 
 def iso_transform(date):
