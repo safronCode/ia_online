@@ -11,6 +11,7 @@ from product.models import QRLink
 
 
 def product_card(request, uuid):
+
     try:
         relation = QRLink.objects.get(unique_id=uuid)
     except Exception as e:

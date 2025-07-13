@@ -9,6 +9,3 @@ class QRLink(models.Model):
     class Meta:
         verbose_name = "QR-ссылка товара"
         verbose_name_plural = "QR-ссылки товаров"
-
-    def get_absolute_url(self):
-        return f"/card/{self.unique_id}/"

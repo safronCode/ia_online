@@ -28,6 +28,7 @@
             id="product_name"
             placeholder="Введите название"
             style="width: 230px;">
+          <ul id="autocomplete_results" hidden></ul>
         </td>
       </tr>
     </table>
@@ -36,6 +37,53 @@
       <button type="submit" style="padding: 10px 30px; width:500px;">Создать карточку</button>
     </div>
   </form>
+  
+  <script>
+    const nameInput = document.getElementById("product_name");
+    const idInput = document.getElementById("product_id");
+    const resultsContainer = document.getElementById("autocomplete_results");
+
+    let timeoutId;
+
+    nameInput.addEventListener("input", () => {
+      clearTimeout(timeoutId);
+      const query = nameInput.value.trim();
+
+      if (query.length === 0) {
+        resultsContainer.hidden = true;
+        return;
+      }
+
+      timeoutId = setTimeout(() => {
+        fetch(`/product/autocomplete?q=${encodeURIComponent(query)}`)
+          .then(response => response.json())
+          .then(data => {
+            resultsContainer.innerHTML = "";
+            if (data.results.length === 0) {
+              resultsContainer.hidden = true;
+              return;
+            }
+
+            data.results.forEach(item => {
+              const li = document.createElement("li");
+              li.textContent = item.name;
+              li.dataset.id = item.id;
+
+              li.addEventListener("click", () => {
+                nameInput.value = item.name;
+                idInput.value = item.id;
+                resultsContainer.hidden = true;
+              });
+
+              resultsContainer.appendChild(li);
+            });
+
+            resultsContainer.hidden = false;
+          })
+      }, 300);
+    });
+  </script>
+  
   
   {% if qr_base64 %}
   <h3>QR-код для перехода (ID product - {{ product_id }}):</h3>
