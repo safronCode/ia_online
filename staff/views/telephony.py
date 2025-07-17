@@ -1,9 +1,8 @@
-import datetime, time
 import random
+import datetime
 
-from django.shortcuts import redirect
 from django.utils import timezone
-from django.conf import settings
+from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 
 from integration_utils.bitrix24.models import BitrixUserToken
