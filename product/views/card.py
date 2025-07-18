@@ -10,6 +10,8 @@ from integration_utils.bitrix24.exceptions import BitrixApiError
 from product.models import QRLink
 
 
+load_dotenv()
+
 def product_card(request, uuid):
 
     try:
@@ -20,10 +22,8 @@ def product_card(request, uuid):
     product_id = relation.product_id
 
     try:
-        load_dotenv(dotenv_path="local.env", override=True)
-
-        bitrix_domain = os.getenv('BITRIX_DOMAIN')
-        bitrix_webhook_auth = os.getenv('BITRIX_WEBHOOK_AUTH')
+        bitrix_domain = os.environ['BITRIX_DOMAIN']
+        bitrix_webhook_auth = os.environ['BITRIX_WEBHOOK_AUTH']
 
         webhook_token = BitrixToken(
             domain=bitrix_domain,

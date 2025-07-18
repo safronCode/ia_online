@@ -1,12 +1,16 @@
-import os, uuid, qrcode, io, base64
-from dotenv import load_dotenv
+import os, qrcode, io, base64
 
 from django.http import HttpResponse
 from django.shortcuts import render
+from dotenv import load_dotenv
+
 from integration_utils.bitrix24.bitrix_user_auth.main_auth import main_auth
 from integration_utils.bitrix24.exceptions import BitrixApiError
 
 from product.models import QRLink
+
+
+load_dotenv()
 
 @main_auth(on_cookies=True)
 def qr_generator(request):
@@ -50,11 +54,10 @@ def qr_generator(request):
 
             product_id = int(products[0]['ID'])
 
-        load_dotenv(dotenv_path="local.env", override=True)
-        root_url = os.getenv('ROOT_URL')
-        unique_id = str(uuid.uuid4())
-        gen_url = root_url + "product/card/" + unique_id
-        QRLink.objects.create(product_id=product_id, unique_id=unique_id)
+        root_url = os.environ['ROOT_URL']
+        QRLink.objects.create(product_id=product_id)
+        uuid = str(QRLink.objects.filter(product_id=product_id).last().unique_id)
+        gen_url = root_url + "product/card/" + uuid
 
         qr_img = qrcode.make(gen_url)
         buffer = io.BytesIO()
