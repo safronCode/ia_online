@@ -1,5 +1,3 @@
-from lib2to3.fixes.fix_asserts import NAMES
-
 from django.utils import timezone
 from datetime import timedelta
 from django.shortcuts import render
