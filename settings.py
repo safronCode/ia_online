@@ -28,11 +28,14 @@ INSTALLED_APPS = [
     'integration_utils.bitrix24',
     'integration_utils.its_utils.app_gitpull',
 
-    'start',
+    'company',
+    'contacts',
     'deals',
     'product',
+    'start',
     'staff',
-    'company',
+
+
 ]
 
 MIDDLEWARE = [
