@@ -3,3 +3,4 @@ ROOT_URL='https://your-domain/'
 # Входящий вебхук
 BITRIX_DOMAIN='yourcompany.bitrix24.ru'
 BITRIX_WEBHOOK_AUTH='x/webhook-auth/'
+YANDEX_API_KEY='your_secret_key'

@@ -13,7 +13,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 PROJECT_PATH = os.path.dirname(__file__).replace('\\','/')
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'deals',
     'product',
     'staff',
+    'company',
 ]
 
 MIDDLEWARE = [
@@ -101,8 +102,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 ENTRY_FILE_UPLOADING_FOLDER = os.path.join(MEDIA_ROOT, 'uploaded_entrie_files')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -113,9 +114,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 STATICFILES_DIRS = [
-     os.path.join(BASE_DIR, 'staticfiles'),
-]
-
+     os.path.join(BASE_DIR, 'staticfiles')]
 
 from integration_utils.its_utils.mute_logger import MuteLogger
 ilogger = MuteLogger()
