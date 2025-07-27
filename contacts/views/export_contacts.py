@@ -12,6 +12,7 @@ def export_contacts(request):
 
     if request.method == "POST":
 
+        # TODO прописать select к list`ам
         companies = but.call_list_method('crm.company.list')
         companies = {company['ID']: company for company in companies}
 
