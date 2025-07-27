@@ -1,7 +1,7 @@
 from django.urls import path
 
 from lobby.views import reload_lobby
-from api.autocomplete_products import autocomplete_products
+from .api import autocomplete_products
 from .views import qr_generator, product_card, product_catalog
 
 urlpatterns = [
