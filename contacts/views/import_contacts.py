@@ -81,7 +81,14 @@ def import_contacts(request):
                 function_calling_from_bitrix_user_token_think_before_use=True)
 
 
-            os.remove(temp_file_path)
+
+            try:
+                os.remove(temp_file_path)
+                print(f"[ExportFile] Файл удалён: {temp_file_path}")
+            except Exception as e:
+                print(f"[ExportFile] Ошибка при удалении: {e}")
+
+
         else:
             return HttpResponse('Произошла ошибка при загрузке файла. Возможно вы не выбрали его.')
 
