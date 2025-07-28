@@ -25,11 +25,12 @@ def import_contacts(request):
             if ext.lower() not in ALLOWED_EXTENSIONS:
                 return HttpResponse('Ошибка: поддерживаются только .csv и .xlsx файлы.')
 
-            #TODO сделать проверку на существования пути. (Так же сделать в export`е)
+            temp_dir = os.path.join(settings.BASE_DIR, 'temp', 'contact_import')
+            os.makedirs(temp_dir, exist_ok=True)
             temp_file = tempfile.NamedTemporaryFile(
                 delete=False,
                 suffix=ext,
-                dir=os.path.join(settings.BASE_DIR, 'temp', 'contact_import'),
+                dir=temp_dir,
                 mode='wb'
             )
 
@@ -40,10 +41,6 @@ def import_contacts(request):
             temp_file.close()
             imported = ImportData(temp_file_path, ext)
             data_list = imported.parse()
-
-            #TODO тут надо подумать - как отличить один контакт от другого если они максимально похожи
-            #contacts = but.call_list_method('crm.contacts.list', {'select':['ID']})
-            #contacts = {contact['ID']: contact for contact in contacts}
 
             companies = but.call_list_method('crm.company.list', {'select':['ID','TITLE']})
             companies = {company['TITLE']: company for company in companies}
@@ -56,13 +53,11 @@ def import_contacts(request):
                     company_id = but.call_list_method('crm.company.add', {'fields': {'TITLE': data['company_TITLE']}})
                     data['company_ID'] = company_id
 
-                #todo продолжение истории с отлчием контактов
                 if data['contact_ID'] == '':
                     contact_data_add.append(data)
 
             batch = []
-            order = 1
-            for contact in contact_data_add:
+            for idx, contact in enumerate(contact_data_add, start=1):
                 fields ={
                     'NAME': contact.get('contact_NAME', ''),
                     'SECOND_NAME': contact.get('contact_SECOND_NAME', ''),
@@ -75,12 +70,10 @@ def import_contacts(request):
                 }
 
                 batch.append((
-                    f"contact_{order}",
+                    f"contact_{idx}",
                     "crm.contact.add",
                     {"fields": fields}
                 ))
-
-                order += 1
 
             add_result = _batch_api_call(
                 methods=batch,

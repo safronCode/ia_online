@@ -11,9 +11,7 @@ def export_contacts(request):
     but = request.bitrix_user_token
 
     if request.method == "POST":
-
-        # TODO прописать select к list`ам
-        companies = but.call_list_method('crm.company.list')
+        companies = but.call_list_method('crm.company.list', {'select':['ID', 'TITLE']})
         companies = {company['ID']: company for company in companies}
 
         filter = {}
@@ -39,7 +37,7 @@ def export_contacts(request):
                 pass
 
         contacts = but.call_list_method('crm.contact.list', {'filter': filter,
-                                                             'select':['ID','NAME','SECOND_NAME','LAST_NAME','COMPANY_ID']})
+                                                             'select':['ID']})
         contacts = {contact.get('ID'): contact for contact in contacts}
 
         batch = _batch_api_call(

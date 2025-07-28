@@ -25,6 +25,8 @@ class ExportData:
         self.export_dir = os.path.join(settings.BASE_DIR, 'temp', 'contact_export')
         self.file_path = None
 
+        os.makedirs(self.export_dir, exist_ok=True)
+
     def export_csv(self):
         temp = tempfile.NamedTemporaryFile(
             delete=False,
